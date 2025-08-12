@@ -1,0 +1,133 @@
+-- Lost Edition Intro System (standalone, no main.lua logic)
+
+local gu = Game.update
+function Game:update(dt)
+    gu(self, dt)
+    if not G.PROFILES[G.SETTINGS.profile].losted_intro_complete then
+        G.FUNCS.losted_intro_controller()
+    end
+end
+
+-- Step-by-step intro system
+local losted_intro_steps = {
+    { text_key = "losted_intro_1" },
+    { text_key = "losted_intro_2" },
+    { text_key = "losted_intro_3", is_last_text = true },
+}
+
+G.FUNCS.losted_intro_controller = function()
+    G.PROFILES[G.SETTINGS.profile].losted_intro_progress = G.PROFILES[G.SETTINGS.profile].losted_intro_progress or {
+        state = "start",
+        completed = {},
+    }
+    if not G.SETTINGS.paused and not G.PROFILES[G.SETTINGS.profile].losted_intro_complete then
+        if G.STATE == G.STATES.MENU and not G.PROFILES[G.SETTINGS.profile].losted_intro_progress.completed.start then
+            G.PROFILES[G.SETTINGS.profile].losted_intro_progress.section = "start"
+            G.FUNCS.losted_intro_part("start")
+            G.PROFILES[G.SETTINGS.profile].losted_intro_progress.completed.start = true
+            G:save_progress()
+        end
+    end
+end
+
+G.FUNCS.losted_intro_part = function(_part)
+    G.SETTINGS.paused = true
+    if _part == "start" then
+        -- Create the character (Joker)
+        G.LostedCharacter = Card_Character({ center = G.P_CENTERS.j_joker })
+        G.LostedCharacter:set_alignment({ major = G.ROOM_ATTACH, type = "cm", offset = { x = 0, y = -1 } })
+        -- Remove particles and highlight for a cleaner look
+        if G.LostedCharacter.children.particles then
+            G.LostedCharacter.children.particles:remove()
+            G.LostedCharacter.children.particles = nil
+        end
+        if G.LostedCharacter.children.highlight then
+            G.LostedCharacter.children.highlight:remove()
+            G.LostedCharacter.children.highlight = nil
+        end
+        G.LostedCharacter.losted_intro_step = 1
+        G.FUNCS.losted_intro_next_step()
+    end
+end
+
+G.FUNCS.losted_intro_next_step = function()
+    local step = G.LostedCharacter and G.LostedCharacter.losted_intro_step or 1
+    if step == 1 then
+        losted_intro_info({ text_key = "losted_intro_1", step = step })
+    elseif step == 2 then
+        losted_intro_info({ text_key = "losted_intro_2", step = step })
+    elseif step == 3 then
+        losted_intro_info({ text_key = "losted_intro_3", step = step, is_last_text = true })
+    end
+end
+
+function losted_intro_info(args)
+    local step = args.step or 1
+    G.E_MANAGER:add_event(Event({
+        trigger = "after",
+        delay = 0.3,
+        func = function()
+            if G.LostedCharacter then
+                G.LostedCharacter:remove_speech_bubble()
+                G.LostedCharacter:remove_button()
+                -- Show speech bubble at the top
+                G.LostedCharacter:add_speech_bubble(args.text_key, "tm")
+                G.LostedCharacter:say_stuff(5)
+                if args.is_last_text then
+                    G.LostedCharacter:add_button(localize('b_continue'), 'losted_intro_final_step')
+                else
+                    G.LostedCharacter:add_button(localize('b_next'), 'losted_intro_advance')
+                end
+            end
+            return true
+        end,
+    }), "tutorial")
+    return step + 1
+end
+
+G.FUNCS.losted_intro_advance = function()
+    if G.LostedCharacter then
+        G.LostedCharacter.losted_intro_step = (G.LostedCharacter.losted_intro_step or 1) + 1
+        G.FUNCS.losted_intro_next_step()
+    end
+end
+
+G.FUNCS.losted_intro_final_step = function()
+    if G.LostedCharacter then
+        G.LostedCharacter:remove_speech_bubble()
+        G.LostedCharacter:remove_button()
+        local card = G.LostedCharacter.children.card
+        card.children.center.atlas = G.ASSET_ATLAS["losted_jimbo_dance"]
+        card.children.center:set_sprite_pos({ x = 0, y = 0 })
+        card.children.center.animated = true
+        G.LostedCharacter:align()
+        -- Add animation update function
+        card.losted_anim_update = function(self)
+            local frame_amount = 6
+            local timer = (G.TIMERS.REAL * 10) + 1
+            local wrapped_value = (math.floor(timer) - 1) % frame_amount
+            self.children.center:set_sprite_pos({ x = wrapped_value, y = 0 })
+        end
+        -- Patch into Game update
+        if not card._losted_anim_hooked then
+            local old_update = card.update or function() end
+            card.update = function(self, ...)
+                if self.losted_anim_update then self:losted_anim_update() end
+                old_update(self, ...)
+            end
+            card._losted_anim_hooked = true
+        end
+        G.LostedCharacter:hard_set_VT()
+        G.LostedCharacter:add_button(localize('b_continue'), 'close_losted_intro', G.C.BLUE, nil, nil, 0.8)
+    end
+end
+
+G.FUNCS.close_losted_intro = function()
+    G.PROFILES[G.SETTINGS.profile].losted_intro_complete = true
+    G:save_progress()
+    G.SETTINGS.paused = false
+    if G.LostedCharacter then
+        G.LostedCharacter:remove()
+        G.LostedCharacter = nil
+    end
+end

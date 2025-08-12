@@ -1,0 +1,220 @@
+-- Lost Edition: UI Hooks
+-- Injects all custom options into the game's settings menu.
+
+local original_settings_tab = G.UIDEF.settings_tab
+function G.UIDEF.settings_tab(tab)
+    local setting_tab = original_settings_tab(tab)
+    
+    -- Section for Gameplay Speed Options
+    if tab == 'Game' then
+        -- This replaces the default game speed selector with our custom ones.
+        -- It's done here in Lua to avoid load order crashes.
+        for i, node_config in ipairs(setting_tab.nodes) do
+            if node_config.nodes and node_config.nodes[1] and node_config.nodes[1].config.opt_callback == 'change_gamespeed' then
+                setting_tab.nodes[i] = {
+                    n = G.UIT.C,
+                    config = { align = 'cm' },
+                    nodes = {
+                        G.UIDEF.losted_speed_options(),
+                        G.UIDEF.losted_fastforward_options(),
+                        G.UIDEF.losted_statustext_options()
+                    }
+                }
+                break
+            end
+        end
+    end
+
+    -- Section for Music Options
+    if tab == 'Audio' then
+        local music_nums = { losted = 1, balatro = 2 }
+        local musicSelector = {n=G.UIT.R, config = {align = 'cm'}, nodes= {
+            create_option_cycle({ 
+                w = 7, 
+                scale = 0.8, 
+                label = localize('k_losted_music_label'),
+                options = {localize('k_losted_music_ost1'), localize('k_losted_music_ost2')}, 
+                opt_callback = 'change_music', 
+                current_option = (music_nums[G.SETTINGS.music_selection] or 1) 
+            })
+        }}
+        table.insert(setting_tab.nodes, musicSelector)
+    end
+    
+    -- Section for Theme Options
+    if tab == 'Themes' then
+        local current_option = G.losted_theme_presets_nums[G.SETTINGS.losted_theme_selection] or 1
+
+        local theme_selector = create_option_cycle({
+            w = 7, scale = 0.9, 
+            label = localize('k_losted_theme_label'),
+            options = G.losted_theme_selector_options, 
+            opt_callback = 'change_losted_theme_preset',
+            current_option = current_option
+        })
+
+        local apply_button = UIBox_button({
+            minw = 4, button = "apply_losted_theme",
+            colour = G.C.GREEN, 
+            label = {localize('k_losted_apply_button')},
+            scale = 0.5
+        })
+
+        setting_tab.nodes = {
+            {n=G.UIT.R, config={align='cm', padding = 0.25}, nodes={ theme_selector }},
+            {n=G.UIT.R, config={align='cm', padding=0.25}, nodes={ apply_button }}
+        }
+    end
+    
+    return setting_tab
+end
+
+local header_scale = 1.1
+local first_column_text_mod = 0.98
+local special_thanks_mod = 1
+local special_thanks_padding = 0
+local coding_scale = 0.90
+local text_scale = 0.98
+
+-- Safe localize helper: uses fallback text if localization key isn't available
+local function L(key, fallback)
+    local ok, txt = pcall(localize, key)
+    if not ok then return fallback or key end
+    if type(txt) ~= 'string' then return fallback or key end
+    if txt == key or txt == 'ERROR' then return fallback or key end
+    return txt
+end
+
+-- Credits content (Lost Edition)
+local LE_CREDITS = {
+    direction = { "Click no Paulo", "Danitskkj" },
+    music = { "gulira" },
+    artists = { "Click no Paulo", "Wellyson", "Xosé", "Henry", "Roger", "Timba" },
+    coding = { "Danitskkj", "Ilumino", "Evelyn" },
+    beta = { "Galves", "Wellyson", "Xosé" },
+    thanks = {
+        "Localthunk for creating this wonderful game!",
+        "And the channel subscribers for the ideas and support with the mod! <3",
+    },
+}
+
+SMODS.current_mod.credits_tab = function()
+    chosen = true
+    -- helper to Title Case names
+    local function titlecase(s)
+        if type(s) ~= 'string' then return s end
+        return (s:gsub("(%S+)", function(w)
+            return w:sub(1,1):upper()..w:sub(2)
+        end))
+    end
+
+    -- build left column (Direction, Music, Artists)
+    local left_col = { n = G.UIT.C, config = { align = "tm", padding = 0.05, minw = 4.8 }, nodes = {
+        -- Direction
+        { n = G.UIT.R, config = { align = "tm", padding = 0.1, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = L("le_credits_direction", "Direction"), scale = header_scale * 0.6, colour = HEX('F75294'), shadow = true } },
+            } },
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                { n = G.UIT.R, config = { align = "tm", padding = 0 }, nodes = {
+                    { n = G.UIT.T, config = { text = titlecase(table.concat(LE_CREDITS.direction, " & ")), scale = text_scale * 0.58 * first_column_text_mod, colour = HEX('B38CFF'), shadow = true } },
+                } },
+            } },
+        } },
+        -- Music
+        { n = G.UIT.R, config = { align = "tm", padding = 0.1, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = L("le_credits_music", "Music"), scale = header_scale * 0.6, colour = HEX('F75294'), shadow = true } },
+            } },
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                { n = G.UIT.R, config = { align = "tm", padding = 0 }, nodes = {
+                    { n = G.UIT.T, config = { text = titlecase(table.concat(LE_CREDITS.music, ", ")), scale = text_scale * 0.58 * first_column_text_mod, colour = HEX('B38CFF'), shadow = true } },
+                } },
+            } },
+        } },
+        -- Artists
+        { n = G.UIT.R, config = { align = "tm", padding = 0.1, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = L("le_credits_artists", "Artists"), scale = header_scale * 0.6, colour = HEX('F75294'), shadow = true } },
+            } },
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = (function()
+                local list = {}
+                for _, name in ipairs(LE_CREDITS.artists) do
+                    list[#list + 1] = { n = G.UIT.R, config = { align = "tm", padding = 0 }, nodes = {
+                        { n = G.UIT.T, config = { text = titlecase(name), scale = text_scale * 0.58 * first_column_text_mod, colour = HEX('B38CFF'), shadow = true } },
+                    } }
+                end
+                return list
+            end)() },
+        } },
+    } }
+
+    -- build right column (Coding, Beta, Thanks)
+    local right_col = { n = G.UIT.C, config = { align = "tm", padding = 0.05, minw = 4.8 }, nodes = {
+        -- Coding
+    { n = G.UIT.R, config = { align = "tm", padding = 0.08, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = L("le_credits_coding", "Coding"), scale = header_scale * 0.62, colour = HEX('F75294'), shadow = true } },
+            } },
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = (function()
+                local list = {}
+                for _, name in ipairs(LE_CREDITS.coding) do
+                    list[#list + 1] = { n = G.UIT.R, config = { align = "tm", padding = 0 }, nodes = {
+            { n = G.UIT.T, config = { text = titlecase(name), scale = text_scale * 0.58, colour = HEX('B38CFF'), shadow = true } },
+                    } }
+                end
+                return list
+            end)() },
+        } },
+        -- Beta Testers
+        { n = G.UIT.R, config = { align = "tm", padding = 0.08, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                { n = G.UIT.T, config = { text = L("le_credits_beta", "Quality Assurance (Beta Testers)"), scale = header_scale * 0.62, colour = HEX('F75294'), shadow = true } },
+            } },
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = (function()
+                local list = {}
+                for _, name in ipairs(LE_CREDITS.beta) do
+                    list[#list + 1] = { n = G.UIT.R, config = { align = "tm", padding = special_thanks_padding }, nodes = {
+                        { n = G.UIT.T, config = { text = titlecase(name), scale = text_scale * 0.58 * special_thanks_mod, colour = HEX('B38CFF'), shadow = true } },
+                    } }
+                end
+                return list
+            end)() },
+        } },
+        -- Special Thanks
+    { n = G.UIT.R, config = { align = "tm", padding = 0.1, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+        { n = G.UIT.T, config = { text = L("le_credits_thanks", "Special Thanks"), scale = header_scale * 0.68, colour = HEX('F75294'), shadow = true } },
+            } },
+            { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = (function()
+                local list = {}
+                for _, line in ipairs(LE_CREDITS.thanks) do
+        list[#list + 1] = { n = G.UIT.R, config = { align = "tm", padding = special_thanks_padding }, nodes = {
+            { n = G.UIT.T, config = { text = line, scale = text_scale * 0.56 * special_thanks_mod, colour = HEX('B38CFF'), shadow = true } },
+                    } }
+                end
+                return list
+            end)() },
+        } },
+    } }
+
+    return {
+        n = G.UIT.ROOT,
+        config = { align = "cm", padding = 0.2, colour = G.C.BLACK, r = 0.1, emboss = 0.05, minh = 6, minw = 10 },
+        nodes = {
+            { n = G.UIT.C, config = { align = "tm", padding = 0.2 }, nodes = {
+                -- Title
+                { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
+                    { n = G.UIT.T, config = { text = L("b_credits", "Credits"), scale = text_scale * 1.2, colour = HEX('A86CFF'), shadow = true } },
+                } },
+                -- Two-column layout row
+                { n = G.UIT.R, config = { align = "tm", padding = 0.05 }, nodes = {
+                    left_col,
+                    right_col,
+                } },
+            } },
+        }
+    }
+end
+
+return true

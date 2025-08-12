@@ -1,0 +1,41 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 9999999
+
+# Staple Gun: Reduce chance of common jokers ~ 30%
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = 'local _pool, _pool_key = get_current_pool(_type, _rarity, legendary, key_append)'
+position = 'before'
+match_indent = true
+payload = '''
+if G.GAME and G.GAME.losted_staple_gun_active and _type == 'Joker' then
+    local function is_common(r)
+        return (r == nil)
+            or ((type(r) == 'number') and (r < 0.7))
+            or ((type(r) == 'string') and (r == 'Common'))
+    end
+    if is_common(_rarity) then
+        if pseudorandom('staple_gun_reduce_common'..G.SEED..G.GAME.round_resets.ante) > 0.3 then
+        else
+            -- reroll rarity to uncommon or higher
+            _rarity = 0.7 + pseudorandom('staple_gun_reroll'..G.SEED..G.GAME.round_resets.ante) * 0.3
+        end
+    end
+end
+'''
+
+# Two more card on boosters
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = 'SMODS.OPENED_BOOSTER = self'
+position = 'after'
+payload = '''
+if G.GAME.used_vouchers.v_losted_booster_bag then 
+    SMODS.OPENED_BOOSTER.ability.extra = SMODS.OPENED_BOOSTER.ability.extra + 2
+end
+'''
+match_indent = true

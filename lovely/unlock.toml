@@ -1,0 +1,21 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 9999999
+
+# create the jokers buy
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "c_cards_sold = 0,"
+position = "after"
+payload = "c_jokers_bought = 0,"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = "G.GAME.current_round.jokers_purchased = G.GAME.current_round.jokers_purchased + 1"
+position = "before"
+payload = "inc_career_stat('c_jokers_bought', 1)"
+match_indent = true

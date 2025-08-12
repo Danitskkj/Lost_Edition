@@ -1,0 +1,22 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 9999999
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = 'G.STATE = G.STATES.SHOP'
+position = 'at'
+match_indent = true
+payload = '''
+
+-- Skip the shop if the watchdog_flag is active
+if G.GAME.watchdog_flag then
+    G.GAME.watchdog_flag = false
+    G.STATE = G.STATES.BLIND_SELECT
+else
+    G.STATE = G.STATES.SHOP
+end
+
+'''

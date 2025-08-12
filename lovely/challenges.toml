@@ -1,0 +1,187 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 9999999
+
+# No tags
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "if type == 'Small' then"
+position = "at"
+payload = "if type == 'Small' and not G.GAME.modifiers.no_tags then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "elseif type == 'Big' then"
+position = "at"
+payload = "elseif type == 'Big' and not G.GAME.modifiers.no_tags then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "elseif not run_info then"
+position = "at"
+payload = "elseif type == 'Boss' and not run_info then"
+match_indent = true
+
+
+# Only boss blinds
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME.round_resets.blind_choices.Boss = get_new_boss()"
+position = "before"
+payload = '''
+if G.GAME.modifiers.boss_rush then
+    self.GAME.round_resets.blind_choices.Small = get_new_boss()
+    self.GAME.round_resets.blind_choices.Big = get_new_boss()
+    self.GAME.round_resets.blind_choices.Boss = get_new_boss()
+else
+    local boss = get_new_boss()
+    self.GAME.round_resets.blind_choices.Boss = boss
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "G.GAME.round_resets.blind_choices.Boss = get_new_boss()"
+position = "before"
+payload = '''
+if G.GAME.modifiers.boss_rush then
+    G.GAME.round_resets.blind_choices.Small = get_new_boss()
+    G.GAME.round_resets.blind_choices.Big = get_new_boss()
+    G.GAME.round_resets.blind_choices.Boss = get_new_boss()
+else
+    local boss = get_new_boss()
+    G.GAME.round_resets.blind_choices.Boss = boss
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "self.chips = get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling"
+position = "at"
+payload = '''
+if G.GAME.modifiers.boss_rush then
+    local base_score = get_blind_amount(G.GAME.round_resets.ante) * self.mult * G.GAME.starting_params.ante_scaling
+    if G.GAME.blind_on_deck == 'Small' then
+        self.chips = math.floor(base_score * 0.5)
+    elseif G.GAME.blind_on_deck == 'Big' then
+        self.chips = math.floor(base_score * 0.75)
+    else
+        self.chips = base_score
+    end
+else
+    self.chips = get_blind_amount(G.GAME.round_resets.ante) * self.mult * G.GAME.starting_params.ante_scaling
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "local blind_amt = get_blind_amount(G.GAME.round_resets.blind_ante)*blind_choice.config.mult*G.GAME.starting_params.ante_scaling"
+position = "after"
+payload = '''
+if G.GAME.modifiers.boss_rush then
+    if type == 'Small' then
+        blind_amt = math.floor(blind_amt * 0.5)
+    elseif type == 'Big' then
+        blind_amt = math.floor(blind_amt * 0.75)
+    end
+end
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if G.GAME.blind:get_type() == 'Boss' then"
+position = "at"
+payload = "if G.GAME.blind_on_deck == 'Boss' then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if G.GAME.round_resets.blind == G.P_BLINDS.bl_small then"
+position = "at"
+payload = "if G.GAME.blind_on_deck == 'Small' then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if G.GAME.round_resets.ante == G.GAME.win_ante and G.GAME.blind:get_type() == 'Boss' then"
+position = "at"
+payload = "if G.GAME.round_resets.ante >= G.GAME.win_ante and G.GAME.blind_on_deck == 'Boss' then"
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "elseif G.GAME.round_resets.blind == G.P_BLINDS.bl_big then"
+position = "at"
+payload = "elseif G.GAME.blind_on_deck == 'Big' then"
+match_indent = true
+
+# Only Jokers
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME.joker_rate = 0"
+position = "after"
+payload = '''
+elseif v.id == 'only_jokers' then
+    self.GAME.planet_rate = 0
+    self.GAME.tarot_rate = 0
+    self.GAME.spectral_rate = 0
+'''
+match_indent = true
+
+# Force selection 
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "function Blind:drawn_to_hand()"
+position = "after"
+payload = '''
+if G.GAME.modifiers.force_selection and not self.disabled and #G.hand.cards > 0 then
+    local any_forced = nil
+    for _, playing_card in ipairs(G.hand.cards) do
+        if playing_card.ability.forced_selection then
+            any_forced = true
+            break
+        end
+    end
+    if not any_forced then
+        G.hand:unhighlight_all()
+        local forced_card = pseudorandom_element(G.hand.cards, 'puppeteer_challenge')
+        if forced_card then
+            forced_card.ability.forced_selection = true
+            G.hand:add_to_highlighted(forced_card)
+        end
+    end
+end
+'''
+match_indent = true
+
+# Ante 16 challenge
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME.joker_rate = 0"
+position = "after"
+payload = '''
+elseif v.id == 'marathon' then 
+    G.GAME.win_ante = 16
+'''
+match_indent = true
