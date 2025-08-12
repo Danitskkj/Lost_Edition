@@ -50,7 +50,6 @@ Delete the `Lost_Edition` folder from your `Mods` directory.
 - Conflicts: If you suspect a mod conflict, try disabling other mods temporarily.
 
 ## Credits
-This mod is a collaborative effort brought to life by the passion and talent of many contributors. See the in-game Credits tab for the full list.
 
 **Direction**
 - Click no Paulo
