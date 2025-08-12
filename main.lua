@@ -53,6 +53,7 @@ end
 
 -- Reset jokers on run start
 function SMODS.current_mod.reset_game_globals(run_start)
+    G.GAME.negative_rate = 1
     LOSTEDMOD.funcs.reset_losted_obsidian_card()
     LOSTEDMOD.funcs.reset_losted_moist_cake()
     LOSTEDMOD.funcs.reset_losted_sarcophagus()

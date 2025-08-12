@@ -49,7 +49,7 @@ SMODS.Booster:take_ownership_by_kind('Arcana', {
 
 SMODS.Edition:take_ownership('negative', {
     get_weight = function(self)
-        return (G.GAME.negative_rate - 1) * self.weight + G.GAME.negative_rate * self.weight
+        return ((G.GAME.negative_rate or 1) - 1) * self.weight + (G.GAME.negative_rate or 1) * self.weight
     end,
 })
 

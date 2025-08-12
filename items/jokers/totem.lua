@@ -2,37 +2,49 @@
 if not LOSTEDMOD.totem_bonus then
     LOSTEDMOD.totem_bonus = true
 
-    -- 1 in 3 chance to double the money gained (100% bonus)
-    local function bonus_dollars_if_totem(mod)
-        if tonumber(mod) > tonumber(0) and G.jokers then
-            for _, v in ipairs(G.jokers.cards) do
-                if v.config and v.config.center and v.config.center.key == 'j_losted_totem' and not v.debuff then
-                    local odds = (v.config.extra and v.config.extra.odds) or 3
-                    if pseudorandom('losted_totem') < (G.GAME.probabilities.normal or 1) / odds then
-                        local bonus = tonumber(mod) -- 100% bonus
-                        local total = tonumber(mod) + bonus
-                        G.E_MANAGER:add_event(Event {
-                            func = function()
-                                card_eval_status_text(v, 'extra', nil, nil, nil, {
-                                    message = '$' .. tostring(bonus),
-                                    colour = G.C.MONEY,
-                                    instant = true
-                                })
-                                return true
-                            end
-                        })
-                        return total
-                    end
+    -- Helpers
+    local function is_positive_amount(x)
+        if type(x) == 'number' then return x > 0 end
+        if type(x) == 'table' then
+            if x.sign and x.sign > 0 then return true end
+            return false
+        end
+        return false
+    end
+
+    -- 1 in odds chance to double the money gained (apply an extra ease_dollars)
+    local function should_double_and_flash(mod)
+        if not G.jokers or not is_positive_amount(mod) then return false, nil end
+        for _, v in ipairs(G.jokers.cards) do
+            if v.config and v.config.center and v.config.center.key == 'j_losted_totem' and not v.debuff then
+                local odds = (v.config.extra and v.config.extra.odds) or 3
+                if pseudorandom('losted_totem') < (G.GAME.probabilities.normal or 1) / odds then
+                    -- Show bonus text on the Totem card
+                    G.E_MANAGER:add_event(Event {
+                        func = function()
+                            card_eval_status_text(v, 'extra', nil, nil, nil, {
+                                message = (type(mod) == 'number' and ('$' .. tostring(mod))) or 'x2',
+                                colour = G.C.MONEY,
+                                instant = true
+                            })
+                            return true
+                        end
+                    })
+                    return true, v
                 end
             end
         end
-        return mod
+        return false, nil
     end
 
-    -- Hook to add bonus money if Totem is present
+    -- Hook to add bonus money if Totem is present by applying the same amount twice
     local original_ease_dollars = ease_dollars
     function ease_dollars(mod, ...)
-        mod = bonus_dollars_if_totem(mod)
+        local double = should_double_and_flash(mod)
+        if double then
+            -- Apply extra payout first (or after, order is not critical)
+            original_ease_dollars(mod, ...)
+        end
         return original_ease_dollars(mod, ...)
     end
 end

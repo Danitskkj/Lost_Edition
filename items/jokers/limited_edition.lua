@@ -30,9 +30,19 @@ local jokerInfo = {
     locked_loc_vars = function(self, info_queue, card)
         return { vars = { 40, G.PROFILES[G.SETTINGS.profile].career_stats.c_jokers_sold } }
     end,
-    check_for_unlock = function(self, args) 
-        if args.type == 'career_stat' and args.statname == 'c_jokers_sold' then
-            return G.PROFILES[G.SETTINGS.profile].career_stats[args.statname] >= 40
+    check_for_unlock = function(self, args)
+        local stats = G.PROFILES and G.SETTINGS and G.PROFILES[G.SETTINGS.profile] and G.PROFILES[G.SETTINGS.profile].career_stats or {}
+        local current = tonumber(stats.c_jokers_sold) or 0
+        local meets = current >= 40
+        if meets then
+            if not self.unlocked then unlock_card(self) end
+            return true
+        end
+        if args and args.type == 'career_stat' and args.statname == 'c_jokers_sold' then
+            if current >= 40 then
+                if not self.unlocked then unlock_card(self) end
+                return true
+            end
         end
         return false
     end
