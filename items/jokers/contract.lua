@@ -6,7 +6,7 @@ local jokerInfo = {
     cost = 6,
     unlocked = true,
     blueprint_compat = false,
-    eternal_compat = false,
+    eternal_compat = true, -- is always eternal
     perishable_compat = false,
     config = {
         extra = {
@@ -46,16 +46,9 @@ local jokerInfo = {
                 most_played_hand = k
             end
         end
-
         card.ability.extra.contracted_hand = most_played_hand
         card.ability.extra.rounds_remaining = 15
-
         card.ability.eternal = true
-    end,
-    remove_from_deck = function(self, card, from_debuff)
-        card.ability.extra.contracted_hand = nil
-        card.ability.extra.rounds_remaining = 15
-        card.ability.eternal = false
     end,
     calculate = function(self, card, context)
         if context.debuff_hand and not context.blueprint then
@@ -67,9 +60,7 @@ local jokerInfo = {
                 }
             end
         end
-
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-            -- Update contracted hand to always reflect the most played hand
             local most_played_hand = "High Card"
             local highest_count = 0
 
