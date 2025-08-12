@@ -606,11 +606,10 @@ return {
                     'e as {C:dark_edition}melhorias{}',
                     'das {C:attention}cartas jogadas{}',
                 },
-                unlock = {
-                    'Comece {C:attention}#1#{} rodadas',
-                    'jogando apenas {C:attention}#2#{} cartas',
-                    'na {C:attention}primeira mão{}'
-                }
+                unlock={
+                    "Acabe com o Blind de Chefe",
+                    "com uma {E:1,C:attention}#1#",
+                },
             },
             j_losted_miner = {
                 name = 'Curinga Minerador',

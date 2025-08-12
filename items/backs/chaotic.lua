@@ -77,7 +77,7 @@ local backInfo = {
         return { vars = { other_name } }
     end,
     check_for_unlock = function(self, args)
-        return args.type == 'win_deck' and get_deck_win_stake('b_losted_fortune') > 1
+        return args.type == 'win_deck' and get_deck_win_stake('b_losted_fortune') and true
     end
 }
 

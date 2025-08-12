@@ -63,17 +63,11 @@ local jokerInfo = {
         end
     end,
     locked_loc_vars = function(self, info_queue, card)
-        return { vars = { 3, 3 } }
+        return { vars = { localize('Three of a Kind', 'poker_hands') } }
     end,
     check_for_unlock = function(self, args)
-        if args.type == 'hand_contents' then
-            if not G.GAME or not G.GAME.current_round then return false end
-            local cr = G.GAME.current_round
-            local last = G.GAME.last_hand_played
-            if cr and cr.hands_played == 1 and args.cards and #args.cards <= 3 then
-                G.GAME.losted_error_first_small = (G.GAME.losted_error_first_small or 0) + 1
-                if G.GAME.losted_error_first_small >= 3 then return true end
-            end
+        if args.type == 'round_win' then
+            return G.GAME.last_hand_played == 'Three of a Kind' and G.GAME.blind.boss
         end
         return false
     end

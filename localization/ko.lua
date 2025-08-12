@@ -610,11 +610,10 @@ return {
                     '{C:attention}플레이한 카드{}의 {C:attention}수트{}, {C:attention}랭크{} 및',
                     '{C:dark_edition}개선 사항{}을 무작위로 변경합니다',
                 },
-                unlock = {
-                    '{C:attention}첫 핸드{}에서',
-                    '{C:attention}#2#{}장의 카드만 플레이하여',
-                    '{C:attention}#1#{} 라운드를 시작하세요'
-                }
+                unlock={
+                    "{E:1,C:attention}#1#{} (으)로",
+                    "보스 블라인드를 물리칩니다",
+                },
             },
             j_losted_miner = {
                 name = '광부 조커',

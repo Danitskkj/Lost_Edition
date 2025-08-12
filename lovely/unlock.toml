@@ -19,3 +19,32 @@ pattern = "G.GAME.current_round.jokers_purchased = G.GAME.current_round.jokers_p
 position = "before"
 payload = "inc_career_stat('c_jokers_bought', 1)"
 match_indent = true
+
+# Unlock by challenge win, code by bunco
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "unlock_achievement('rule_bender')"
+position = 'before'
+match_indent = true
+payload = '''
+
+local challenge_card
+
+for i = 1, #G.P_LOCKED do
+    challenge_card = G.P_LOCKED[i]
+
+    if not challenge_card.unlocked and challenge_card.check_for_unlock and type(challenge_card.check_for_unlock) == 'function' then
+        challenge_card:check_for_unlock({type = 'win_challenge'})
+    end
+end
+
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "if not SMODS.config.seeded_unlocks and (G.GAME.seeded or G.GAME.challenge) then return end"
+position = 'at'
+match_indent = true
+payload = '''if not SMODS.config.seeded_unlocks and (G.GAME.seeded or (G.GAME.challenge and not card.challenge_bypass)) then return end'''

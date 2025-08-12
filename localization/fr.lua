@@ -609,11 +609,10 @@ return {
                     'et les {C:dark_edition}améliorations{} des',
                     '{C:attention}cartes jouées{}',
                 },
-                unlock = {
-                    'Commencez {C:attention}#1#{} manches',
-                    'en ne jouant que {C:attention}#2#{} cartes',
-                    'dans la {C:attention}première main{}'
-                }
+                unlock={
+                    "Battez une Boss Blinde",
+                    "avec 1 {E:1,C:attention}#1#",
+                },
             },
             j_losted_miner = {
                 name = 'Joker Mineur',

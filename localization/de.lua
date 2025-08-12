@@ -608,11 +608,10 @@ return {
                     '{C:dark_edition}Verbesserungen{} der',
                     '{C:attention}gespielten Karten{} zufällig gewählt',
                 },
-                unlock = {
-                    'Beginne {C:attention}#1#{} Runden,',
-                    'indem du nur {C:attention}#2#{} Karten',
-                    'in der {C:attention}ersten Hand{} spielst'
-                }
+                unlock={
+                    "Schlage einen Boss Blind",
+                    "mit einem {E:1,C:attention}#1#",
+                },
             },
             j_losted_miner = {
                 name = 'Minenarbeiter-Joker',

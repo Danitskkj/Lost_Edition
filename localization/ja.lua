@@ -612,11 +612,10 @@ return {
                     '{C:attention}プレイされたカード{}の{C:attention}スーツ{}、{C:attention}ランク{}、',
                     'および{C:dark_edition}改良{}をランダム化する',
                 },
-                unlock = {
-                    '{C:attention}#1#{}ラウンドの開始時に',
-                    '{C:attention}最初のハンド{}で',
-                    '{C:attention}#2#{}枚のカードのみをプレイする'
-                }
+                unlock={
+                    "{E:1,C:attention}#1#{} で",
+                    "ボスブラインドを倒す",
+                },
             },
             j_losted_miner = {
                 name = 'マイナージョーカー',

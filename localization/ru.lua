@@ -607,11 +607,10 @@ return {
                     'и {C:dark_edition}улучшения{}',
                     '{C:attention}сыгранных карт{}',
                 },
-                unlock = {
-                    'Начните {C:attention}#1#{} раундов,',
-                    'сыграв только {C:attention}#2#{} карт(ы)',
-                    'в {C:attention}первой руке{}'
-                }
+                unlock={
+                    "Победить Босс-блайнд",
+                    "с: {E:1,C:attention}#1#",
+                },
             },
             j_losted_miner = {
                 name = 'Джокер-шахтер',

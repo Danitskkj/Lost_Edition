@@ -604,11 +604,10 @@ return {
                     '则随机化已打出牌的',
                     '{C:attention}花色{}、{C:attention}点数{}和{C:dark_edition}改进{}',
                 },
-                unlock = {
-                    '在{C:attention}#1#{}个回合的开始',
-                    '只打出{C:attention}#2#{}张牌',
-                    '作为{C:attention}第一手牌{}'
-                }
+                 unlock={
+                    "用{E:1,C:attention}#1#",
+                    "打赢Boss盲注",
+                },
             },
             j_losted_miner = {
                 name = '矿工小丑',

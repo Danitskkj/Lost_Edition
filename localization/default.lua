@@ -601,11 +601,10 @@ return {
                     'and {C:dark_edition}improvements{}',
                     'of the {C:attention}played cards{}',
                 },
-                unlock = {
-                    'Start {C:attention}#1#{} rounds',
-                    'playing only {C:attention}#2#{} cards',
-                    'in the {C:attention}first hand{}'
-                }
+                unlock={
+                    "Beat a Boss Blind",
+                    "with a {E:1,C:attention}#1#",
+                },
             },
             j_losted_miner = {
                 name = 'Miner Joker',
