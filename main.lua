@@ -10,8 +10,6 @@ LOSTEDMOD = {
     funcs = {}
 }
 
-_G.to_big = to_big or function(x) return x end
-
 -- Debugging functions
 function sendDebugMessage(msg)
     print("[Lost Edition DEBUG] " .. tostring(msg))
