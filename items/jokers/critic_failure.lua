@@ -22,7 +22,7 @@ local jokerInfo = {
         return { vars = { number_format(10000000000) } }
     end,
     check_for_unlock = function(self, args)
-        return args.type == 'chip_score' and args.chips >= 10000000000
+        return args.type == 'chip_score' and to_big(args.chips) >= to_big(10000000000)
     end
 }
 

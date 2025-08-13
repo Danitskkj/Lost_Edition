@@ -24,6 +24,7 @@ local includes = {
     'tables',
     'utilities', 
     'assets',
+    'compat',
     'hooks/game',
     'hooks/overrides',
     'hooks/pow_mult',
