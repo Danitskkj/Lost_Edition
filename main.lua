@@ -1,4 +1,3 @@
-_G.to_big = to_big or function(x) return x end
 SMODS.current_mod.optional_features = {
 	retrigger_joker = true -- Quantum edition, retrigger joker one time 
 }
@@ -10,6 +9,8 @@ LOSTEDMOD = {
     },
     funcs = {}
 }
+
+_G.to_big = to_big or function(x) return x end
 
 -- Debugging functions
 function sendDebugMessage(msg)
