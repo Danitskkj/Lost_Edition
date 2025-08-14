@@ -17,8 +17,12 @@ match_indent = true
 target = "functions/button_callbacks.lua"
 pattern = "G.GAME.current_round.jokers_purchased = G.GAME.current_round.jokers_purchased + 1"
 position = "before"
-payload = "inc_career_stat('c_jokers_bought', 1)"
 match_indent = true
+payload = '''
+inc_career_stat('c_jokers_bought', 1)
+local total_jokers = (G.PROFILES[G.SETTINGS.profile].career_stats or {}).c_jokers_bought or 0
+check_for_unlock({ type = 'buy_joker', jokers_total = total_jokers })
+'''
 
 # Unlock by challenge win, code by bunco
 [[patches]]
@@ -48,3 +52,38 @@ pattern = "if not SMODS.config.seeded_unlocks and (G.GAME.seeded or G.GAME.chall
 position = 'at'
 match_indent = true
 payload = '''if not SMODS.config.seeded_unlocks and (G.GAME.seeded or (G.GAME.challenge and not card.challenge_bypass)) then return end'''
+
+# Booster pack unlocking - Bunco
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''if self.ability.set == "Booster" then'''
+position = 'after'
+match_indent = true
+payload = '''
+
+    G.PROFILES[G.SETTINGS.profile].booster_packs_opened = (G.PROFILES[G.SETTINGS.profile].booster_packs_opened or 0) + 1
+    check_for_unlock({type = 'open_pack', packs_total = G.PROFILES[G.SETTINGS.profile].booster_packs_opened})
+
+'''
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = 'hands_played = 0,'
+position = 'after'
+match_indent = true
+payload = '''booster_packs_opened = 0,'''
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = '''if self.ability.set == "Booster" then'''
+position = 'after'
+match_indent = true
+payload = '''
+
+    G.GAME.booster_packs_opened = (G.GAME.booster_packs_opened or 0) + 1
+
+'''

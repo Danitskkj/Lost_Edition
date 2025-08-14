@@ -15,10 +15,9 @@ local voucherInfo = {
         return { vars = { 50, G.PROFILES[G.SETTINGS.profile].career_stats.c_jokers_bought } }
     end,
     check_for_unlock = function(self, args)
-        if args.type == 'career_stat' and args.statname == 'c_jokers_bought' then
-            return G.PROFILES[G.SETTINGS.profile].career_stats[args.statname] >= 50
+        if args.type == 'buy_joker' and args.jokers_total >= 50 then
+            unlock_card(self)
         end
-        return false
     end
 }
 
