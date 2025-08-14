@@ -203,11 +203,11 @@ local collabs = {
     
     -- DIAMONDS
     {
-        id = 'collab_9k',
+        id = 'collab_9K',
         name = '9 Kings',
         artist = 'Click No Paulo',
         suits = { 'Diamonds' },
-        files = { 'collabs/collab_9k_diamonds_lc.png', 'collabs/collab_9k_diamonds_hc.png' }
+        files = { 'collabs/collab_9K_diamonds_lc.png', 'collabs/collab_9K_diamonds_hc.png' }
     },
     {
         id = 'collab_ER',
