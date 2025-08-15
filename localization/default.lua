@@ -20,11 +20,6 @@ return {
                     '{C:green,E:1,S:1.1}probabilities',
                     '{C:inactive}(ex: {C:green}1 in 3{C:inactive} -> {C:green}2 in 3{C:inactive})',
                 },
-                unlock = {
-                    'Win a run with any',
-                    'deck on at least',
-                    '{V:1}#1#{} difficulty',
-                }
             },
             b_losted_chaotic = {
                 name = 'Chaotic Deck',
