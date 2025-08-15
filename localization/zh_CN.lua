@@ -20,11 +20,6 @@ return {
                     '{C:green,E:1,S:1.1}概率{}翻倍',
                     '{C:inactive}(例如：{C:green}1/3{C:inactive} -> {C:green}2/3{C:inactive})',
                 },
-                unlock = {
-                    '在至少{V:1}#1#{}难度下',
-                    '使用任意牌组',
-                    '赢得一局游戏',
-                }
             },
             b_losted_chaotic = {
                 name = '混乱牌组',
