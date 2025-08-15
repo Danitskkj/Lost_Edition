@@ -20,11 +20,6 @@ return {
                     '{C:green,E:1,S:1.1}두 배{}로 합니다',
                     '{C:inactive}(예: {C:green}3분의 1{C:inactive} -> {C:green}3분의 2{C:inactive})',
                 },
-                unlock = {
-                    '어떤 덱으로든 최소',
-                    '{V:1}#1#{} 난이도에서',
-                    '런에서 승리하세요',
-                }
             },
             b_losted_chaotic = {
                 name = '혼돈 덱',
