@@ -21,11 +21,6 @@ return {
                     '{C:green,E:1,S:1.1}probabilidades',
                     '{C:inactive}(ex: {C:green}1 em 3{C:inactive} -> {C:green}2 em 3{C:inactive})',
                 },
-                unlock = {
-                    'Vença uma tentativa com qualquer',
-                    'baralho pelo menos na',
-                    'dificuldade {V:1}#1#{}',
-                }
             },
             b_losted_chaotic = {
                 name = 'Baralho Caótico',
