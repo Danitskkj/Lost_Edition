@@ -20,11 +20,6 @@ return {
                     '{C:green,E:1,S:1.1}вероятности',
                     '{C:inactive}(напр.: {C:green}1 из 3{C:inactive} -> {C:green}2 из 3{C:inactive})',
                 },
-                unlock = {
-                    'Выиграйте партию с любой',
-                    'колодой на сложности',
-                    'не ниже {V:1}#1#{}',
-                }
             },
             b_losted_chaotic = {
                 name = 'Хаотичная колода',
