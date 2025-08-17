@@ -20,7 +20,7 @@ local jokerInfo = {
         
         if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
             local current_money = G.GAME.dollars or 0
-            if current_money >= card.ability.extra.dollar_cost then
+            if to_big(current_money) >= to_big(card.ability.extra.dollar_cost) then
                 ease_dollars(-card.ability.extra.dollar_cost)
                 card_eval_status_text(card, 'dollars', -card.ability.extra.dollar_cost)
                 return {

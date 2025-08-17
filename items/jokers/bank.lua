@@ -27,7 +27,7 @@ local jokerInfo = {
             local xmult_per_group = tonumber(card.ability.extra.xmult_per_group)
             local groups = (dollars_per_group and dollars_per_group > 0) and math.floor(current_dollars / dollars_per_group) or 0
             local xmult_bonus = 1 + (groups * (xmult_per_group or 0))
-            if xmult_bonus > 1 then
+            if to_big(xmult_bonus) > to_big(1) then
                 return {
                     xmult = xmult_bonus
                 }
