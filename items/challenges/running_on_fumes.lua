@@ -33,6 +33,7 @@ local challengeInfo = {
             { id = 'j_business' },
             { id = 'j_delayed_grat' },
             { id = 'j_cloud_9' },
+            { id = 'j_losted_chicken_cleide' },
             { id = 'j_egg' },
             { id = 'j_faceless' },
             { id = 'j_mail' },
