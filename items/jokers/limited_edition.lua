@@ -12,7 +12,7 @@ local jokerInfo = {
         return { vars = { card.ability.extra.xmult_gain, card.ability.extra.xmult } }
     end,
     calculate = function(self, card, context)
-        if context.selling_card and context.card.ability.set == 'Joker' then
+        if context.selling_card and context.card.ability.set == 'Joker' and not context.blueprint and context.card ~= card then
             local xmult_gain = (context.card.sell_cost or 0) * (card.ability.extra.xmult_gain)
             if xmult_gain > 0 then
                 card.ability.extra.xmult = (card.ability.extra.xmult) + xmult_gain
