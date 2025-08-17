@@ -69,12 +69,12 @@ function G.UIDEF.settings_tab(tab)
     return setting_tab
 end
 
-local header_scale = 1.1
-local first_column_text_mod = 0.98
-local special_thanks_mod = 1
+local header_scale = 0.92 -- reduzido de 1.1
+local first_column_text_mod = 0.85 -- reduzido de 0.98
+local special_thanks_mod = 0.85 -- reduzido de 1
 local special_thanks_padding = 0
-local coding_scale = 0.90
-local text_scale = 0.98
+local coding_scale = 0.80 -- reduzido de 0.90
+local text_scale = 0.85 -- reduzido de 0.98
 
 -- Safe localize helper: uses fallback text if localization key isn't available
 local function L(key, fallback)
@@ -89,7 +89,7 @@ end
 local LE_CREDITS = {
     direction = { "Click no Paulo", "Danitskkj" },
     music = { "gulira" },
-    artists = { "Click no Paulo", "Wellyson", "Xosé", "Henry", "Roger", "Timba" },
+    artists = { "Click no Paulo", "Wellyson", "Xosé", "Henry", "Roger", "Timba", "Possiblycoolperson" },
     coding = { "Danitskkj", "Ilumino", "Evelyn" },
     beta = { "Galves", "Wellyson", "Xosé" },
     thanks = {
@@ -109,7 +109,7 @@ SMODS.current_mod.credits_tab = function()
     end
 
     -- build left column (Direction, Music, Artists)
-    local left_col = { n = G.UIT.C, config = { align = "tm", padding = 0.05, minw = 4.8 }, nodes = {
+    local left_col = { n = G.UIT.C, config = { align = "tm", padding = 0.03, minw = 3.8 }, nodes = {
         -- Direction
         { n = G.UIT.R, config = { align = "tm", padding = 0.1, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
@@ -150,7 +150,7 @@ SMODS.current_mod.credits_tab = function()
     } }
 
     -- build right column (Coding, Beta, Thanks)
-    local right_col = { n = G.UIT.C, config = { align = "tm", padding = 0.05, minw = 4.8 }, nodes = {
+    local right_col = { n = G.UIT.C, config = { align = "tm", padding = 0.03, minw = 3.8 }, nodes = {
         -- Coding
     { n = G.UIT.R, config = { align = "tm", padding = 0.08, outline_colour = G.C.JOKER_GREY, r = 0.1, outline = 1 }, nodes = {
             { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
@@ -200,15 +200,15 @@ SMODS.current_mod.credits_tab = function()
 
     return {
         n = G.UIT.ROOT,
-        config = { align = "cm", padding = 0.2, colour = G.C.BLACK, r = 0.1, emboss = 0.05, minh = 6, minw = 10 },
+        config = { align = "cm", padding = 0.12, colour = G.C.BLACK, r = 0.1, emboss = 0.05, minh = 4.5, minw = 7.5 },
         nodes = {
-            { n = G.UIT.C, config = { align = "tm", padding = 0.2 }, nodes = {
+            { n = G.UIT.C, config = { align = "tm", padding = 0.12 }, nodes = {
                 -- Title
                 { n = G.UIT.R, config = { align = "cm", padding = 0 }, nodes = {
-                    { n = G.UIT.T, config = { text = L("b_credits", "Credits"), scale = text_scale * 1.2, colour = HEX('A86CFF'), shadow = true } },
+                    { n = G.UIT.T, config = { text = L("b_credits", "Credits"), scale = text_scale * 1.1, colour = HEX('A86CFF'), shadow = true } },
                 } },
                 -- Two-column layout row
-                { n = G.UIT.R, config = { align = "tm", padding = 0.05 }, nodes = {
+                { n = G.UIT.R, config = { align = "tm", padding = 0.03 }, nodes = {
                     left_col,
                     right_col,
                 } },
