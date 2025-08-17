@@ -5,7 +5,7 @@ local jokerInfo = {
     rarity = 2,
     cost = 6,
     unlocked = true,
-    blueprint_compat = true,
+    blueprint_compat = false,
     config = { extra = {} },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = { key = "improvements_of_card", set = "Other" }

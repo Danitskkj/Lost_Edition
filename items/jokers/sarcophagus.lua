@@ -20,7 +20,7 @@ local jokerInfo = {
         }
     end,
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over == false and context.main_eval and G.GAME.blind.boss then
+        if context.end_of_round and context.game_over == false and context.main_eval and G.GAME.blind.boss and not context.blueprint then
             event({
                 func = function()
                     G.GAME.round_resets.sarcophagus_activated = (G.GAME.round_resets.sarcophagus_activated or 0) + 1
@@ -60,6 +60,10 @@ local jokerInfo = {
     end,
     check_for_unlock = function(self, args)
         if args.type == 'win' and G.GAME.blind.boss then
+            if not G.jokers or not G.jokers.cards then
+                return false
+            end
+            
             local negative_jokers = 0
             for _, joker in ipairs(G.jokers.cards) do
                 if joker.edition and joker.edition.negative then

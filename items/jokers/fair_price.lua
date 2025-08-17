@@ -23,10 +23,6 @@ local jokerInfo = {
             if to_big(current_money) >= to_big(card.ability.extra.dollar_cost) then
                 ease_dollars(-card.ability.extra.dollar_cost)
                 card_eval_status_text(card, 'dollars', -card.ability.extra.dollar_cost)
-                return {
-                    message = localize('$') .. '-' .. card.ability.extra.dollar_cost,
-                    colour = G.C.MONEY
-                }
             else
                 LOSTEDMOD.funcs.destroy_joker(card)
                 return {

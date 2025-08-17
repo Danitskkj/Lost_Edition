@@ -23,7 +23,7 @@ local jokerInfo = {
             }
         end
         if context.joker_main then
-            if card.ability.extra.mult > 0 then
+            if to_big(card.ability.extra.mult) > to_big(0) then
                 return {
                     mult = card.ability.extra.mult
                 }

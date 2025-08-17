@@ -21,6 +21,11 @@ return {
                     '{C:green,E:1,S:1.1}probabilidades',
                     '{C:inactive}(ex: {C:green}1 em 3{C:inactive} -> {C:green}2 em 3{C:inactive})',
                 },
+                unlock = {
+                    'Vença uma tentativa com',
+                    '{C:attention}#1#{}',
+                    'em qualquer dificuldade',
+                }
             },
             b_losted_chaotic = {
                 name = 'Baralho Caótico',
@@ -535,7 +540,7 @@ return {
                 name = 'Galinha Cleide',
                 text = {
                     'Quando um {C:attention}Blind de Chefe{} é selecionado,',
-                    'põem um {C:attention}Ovo{} {C:dark_edition}Negativo{}. Máximo {C:attention}#1#{} ovos',
+                    'põe um {C:attention}Ovo{} {C:dark_edition}Negativo{}. Máximo {C:attention}#1#{} ovos',
                     '{C:inactive}(No momento {C:attention}#2#{C:inactive}/#1#)',
                     "{C:inactive,s:0.9}(Destruída após botar os ovos)"
                 },

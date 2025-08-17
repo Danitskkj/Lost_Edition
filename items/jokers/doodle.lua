@@ -5,7 +5,7 @@ local jokerInfo = {
     rarity = 2,
     cost = 8,
     unlocked = true,
-    blueprint_compat = false,
+    blueprint_compat = true,
     eternal_compat = false,
     config = { extra = { destroy_chance = 20 } },
     loc_vars = function(self, info_queue, card)
@@ -50,15 +50,17 @@ local jokerInfo = {
         
         -- Copy the ability of the Joker to the left
         local other_joker = nil
-        for i = 1, #G.jokers.cards do
-            if G.jokers.cards[i] == card then 
-                other_joker = G.jokers.cards[i - 1]
-                break
+        if G.jokers and G.jokers.cards then
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i] == card then 
+                    other_joker = G.jokers.cards[i - 1]
+                    break
+                end
             end
         end
         
         -- Check for destruction chance at end of round
-        if context.end_of_round and not context.repetition and not context.individual and not card.getting_sliced then
+        if context.end_of_round and not context.repetition and not context.individual and not card.getting_sliced and not context.blueprint then
             if pseudorandom('doodle_destroy') < G.GAME.probabilities.normal / card.ability.extra.destroy_chance then
                 G.E_MANAGER:add_event(Event({
                     func = function()

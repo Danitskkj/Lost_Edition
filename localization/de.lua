@@ -20,6 +20,11 @@ return {
                     '{C:green,E:1,S:1.1}Wahrscheinlichkeiten',
                     '{C:inactive}(Bsp.: {C:green}1 zu 3{C:inactive} -> {C:green}2 zu 3{C:inactive})',
                 },
+                unlock = {
+                    'Gewinne einen Durchlauf mit',
+                    '{C:attention}#1#{}',
+                    'auf beliebiger Schwierigkeitsstufe',
+                }
             },
             b_losted_chaotic = {
                 name = 'Chaotisches Deck',

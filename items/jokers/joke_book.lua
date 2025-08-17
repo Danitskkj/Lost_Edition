@@ -21,7 +21,7 @@ local jokerInfo = {
         end
         
         if context.before and context.main_eval and context.scoring_name ~= card.ability.extra.poker_hand and not context.blueprint then
-            if card.ability.extra.xmult > 1 then
+            if to_big(card.ability.extra.xmult) > to_big(1) then
                 card.ability.extra.xmult = 1
                 return {
                     message = localize('k_reset'),

@@ -157,7 +157,7 @@ local jokerInfo = {
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and 
            context.other_card:is_suit(G.GAME.current_round.losted_obsidian_card.suit) then
-            G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + card.ability.extra.dollars
+            G.GAME.dollar_buffer = to_number(G.GAME.dollar_buffer or 0) + card.ability.extra.dollars
             return {
                 chips = card.ability.extra.chips,
                 mult = card.ability.extra.mult,

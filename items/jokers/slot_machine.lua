@@ -32,7 +32,7 @@ local jokerInfo = {
 
             -- Check for bankruptcy first (1 in 500 chance to lose all money)
             if pseudorandom('slot_bankruptcy') < prob_mod / extra.odds_bankruptcy then
-                local current_money = G.GAME.dollars or 0
+                local current_money = to_number(G.GAME.dollars or 0)
                 if current_money > 0 then
                     ret.dollars = -current_money
                     has_effect = true

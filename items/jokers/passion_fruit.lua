@@ -31,7 +31,7 @@ local jokerInfo = {
             end
         end
         if context.joker_main then
-            if card.ability.extra.chips > 0 then
+            if to_big(card.ability.extra.chips) > to_big(0) then
                 return {
                     chips = card.ability.extra.chips
                 }

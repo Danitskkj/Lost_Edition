@@ -20,6 +20,11 @@ return {
                     '{C:green,E:1,S:1.1}probabilidades',
                     '{C:inactive}(ej.: {C:green}1 de 3{C:inactive} -> {C:green}2 de 3{C:inactive})',
                 },
+                unlock = {
+                    'Gana una partida con',
+                    '{C:attention}#1#{}',
+                    'en cualquier dificultad',
+                }
             },
             b_losted_chaotic = {
                 name = 'Baraja Caótica',

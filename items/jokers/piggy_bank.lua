@@ -11,8 +11,8 @@ local jokerInfo = {
         return { vars = { card.ability.extra.chips, card.ability.extra.chips_per_dollar } }
     end,
     calculate = function(self, card, context)
-        if context.round_eval then
-            total_interest = G.GAME.interest_amount*math.min(math.floor(G.GAME.dollars/5), G.GAME.interest_cap/5)
+        if context.round_eval and not context.blueprint then
+            total_interest = G.GAME.interest_amount*math.min(math.floor(to_number(G.GAME.dollars)/5), G.GAME.interest_cap/5)
             card.ability.extra.chips = card.ability.extra.chips + total_interest * card.ability.extra.chips_per_dollar
             return {
                 message = localize('k_upgrade_ex'),
@@ -20,7 +20,7 @@ local jokerInfo = {
                 card = card
             }
         end
-        if context.joker_main and card.ability.extra.chips > 0 then
+        if context.joker_main and to_big(card.ability.extra.chips) > to_big(0) then
             return {
                 chips = card.ability.extra.chips
             }

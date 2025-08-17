@@ -15,7 +15,7 @@ local jokerInfo = {
         return { vars = {} }
     end,
     calculate = function(self, card, context)
-        if context.starting_shop and card.ability.triggered then
+        if context.starting_shop and card.ability.triggered and not context.blueprint then
             card.ability.triggered = false
             event({
                 func = function()
@@ -26,7 +26,7 @@ local jokerInfo = {
             })
         end
 
-        if context.end_of_round and context.main_eval and G.GAME.blind.boss then
+        if context.end_of_round and context.main_eval and G.GAME.blind.boss and not context.blueprint then
             card.ability.triggered = true
         end
     end

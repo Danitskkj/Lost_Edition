@@ -38,7 +38,7 @@ local jokerInfo = {
         }
     end,
     check_for_unlock = function(self, args)
-        if args.type == 'redeem_voucher' then
+        if args.type == 'run_redeem' then
             if G.GAME.used_vouchers['v_hieroglyph'] and G.GAME.used_vouchers['v_petroglyph'] then
                 unlock_card(self)
             end

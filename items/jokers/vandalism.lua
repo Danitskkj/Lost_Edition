@@ -6,7 +6,7 @@ local jokerInfo = {
     cost = 6,
     unlocked = true,
     blueprint_compat = false,
-    config = { extra = { percent = 20 } },
+    config = { extra = { percent = 30 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.percent } }
     end,

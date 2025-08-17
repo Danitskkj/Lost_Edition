@@ -20,6 +20,11 @@ return {
                     '{C:attention}確率{}を{C:green,E:1,S:1.1}2倍{}にする',
                     '{C:inactive}(例: {C:green}3分の1{C:inactive} -> {C:green}3分の2{C:inactive})',
                 },
+                unlock = {
+                    '{C:attention}#1#{}で',
+                    'いずれかの難易度で',
+                    'ランに勝利する',
+                }
             },
             b_losted_chaotic = {
                 name = 'カオティックデッキ',

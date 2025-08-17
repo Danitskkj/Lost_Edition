@@ -21,6 +21,10 @@ local voucherInfo = {
     end,
     check_for_unlock = function(self, args)
         if args.type == 'have_edition' then
+            if not G.jokers or not G.jokers.cards then
+                return false
+            end
+            
             local negative_jokers = 0
             for _, joker in ipairs(G.jokers.cards) do
                 if joker.edition and joker.edition.type == 'negative' then
