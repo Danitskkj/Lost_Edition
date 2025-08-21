@@ -10,7 +10,8 @@ G.losted_theme_presets = {
     { name = 'Solar Flare',        key = 'solar_flare',         colors = { {'F59E42', 'LOSTED_OUTER'}, {'FDE68A', 'LOSTED_INNER'}, {'B45309', 'LOSTED_BLIND'}, {'78350F', 'LOSTED_WON'} } },
     { name = 'Sakura Dream',       key = 'sakura_dream',        colors = { {'F472B6', 'LOSTED_OUTER'}, {'FBCFE8', 'LOSTED_INNER'}, {'BE185D', 'LOSTED_BLIND'}, {'831843', 'LOSTED_WON'} } },
     { name = 'Cyber Neon',         key = 'cyber_neon',          colors = { {'06B6D4', 'LOSTED_OUTER'}, {'A21CAF', 'LOSTED_INNER'}, {'0E7490', 'LOSTED_BLIND'}, {'581C87', 'LOSTED_WON'} } },
-    { name = 'Ember Night',        key = 'ember_night',         colors = { {'DC2626', 'LOSTED_OUTER'}, {'F87171', 'LOSTED_INNER'}, {'7C2D12', 'LOSTED_BLIND'}, {'431407', 'LOSTED_WON'} } }
+    { name = 'Ember Night',        key = 'ember_night',         colors = { {'DC2626', 'LOSTED_OUTER'}, {'F87171', 'LOSTED_INNER'}, {'7C2D12', 'LOSTED_BLIND'}, {'431407', 'LOSTED_WON'} } },
+    { name = 'Plasmatic Flow',      key = 'plasmatic_flow',     colors = { {'D98BAE', 'LOSTED_OUTER'}, {'8A8FC9', 'LOSTED_INNER'}, {'A88DBF', 'LOSTED_BLIND'}, {'E886B0', 'LOSTED_WON'} } }
 }
 
 -- Generate helper tables from the main preset table for the UI
