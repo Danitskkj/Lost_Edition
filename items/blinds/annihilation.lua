@@ -7,10 +7,7 @@ local blindInfo = {
     boss = { min = 4 },
     boss_colour = HEX('27b987'),
     press_play = function(self)
-        local tags = {}
-        for _, tag in ipairs(G.GAME.tags or {}) do
-            table.insert(tags, tag)
-        end
+        local tags = G.GAME.tags or {}
         local n = #tags
         if n > 1 then
             local idx = math.random(n)
@@ -20,6 +17,13 @@ local blindInfo = {
             tag_to_remove:yep("-", G.C.RED, function()
                 if tag_to_remove.ability and tag_to_remove.ability.orbital_hand then
                     G.orbital_hand = tag_to_remove.ability.orbital_hand
+                end
+                -- Properly remove the tag from the G.GAME.tags array
+                for i = #G.GAME.tags, 1, -1 do
+                    if G.GAME.tags[i] == tag_to_remove then
+                        table.remove(G.GAME.tags, i)
+                        break
+                    end
                 end
                 tag_to_remove:remove()
                 G.orbital_hand = nil
