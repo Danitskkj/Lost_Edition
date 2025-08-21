@@ -50,8 +50,7 @@ Delete the `Lost_Edition` folder from your `Mods` directory.
 - Conflicts: If you suspect a mod conflict, try disabling other mods temporarily.
 
 ## Community
-Join our Discord community for help, discussions, and updates:
-- Discord: [https://discord.gg/YWSY9XAguD](https://discord.gg/YWSY9XAguD)
+Join our Discord community for help, discussions, and updates: [https://discord.gg/YWSY9XAguD](https://discord.gg/YWSY9XAguD)
 
 ## Credits
 
