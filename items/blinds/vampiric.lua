@@ -7,14 +7,13 @@ local blindInfo = {
     boss = { min = 6 },
     boss_colour = HEX('f31745'),
     config = {
-        removed_enhancements = nil -- { [card] = {enh_key1=true, enh_key2=true, ...} }
+        removed_enhancements = nil 
     },
     loc_vars = function(self)
         return { vars = {} }
     end,
 
     set_blind = function(self, card, from_debuff)
-        -- prepara tabela de armazenamento (weak keys para evitar leaks se cartas sumirem)
         if not self.config.removed_enhancements then
             self.config.removed_enhancements = setmetatable({}, {__mode = 'k'})
         end
@@ -32,7 +31,6 @@ local blindInfo = {
         for _, card in ipairs(cards) do
             local enhancements = SMODS.get_enhancements(card)
             if enhancements and next(enhancements) and not card.debuff then
-                -- guarda as enhancements desta carta se ainda não registrado
                 if not self.config.removed_enhancements[card] then
                     local stored = {}
                     for enh_key, _ in pairs(enhancements) do
@@ -61,7 +59,6 @@ local blindInfo = {
         return mult, hand_chips, false
     end,
 
-    -- Restaura enhancements em cartas ainda existentes
     defeat = function(self, card, from_debuff)
         if self.config.removed_enhancements then
             for c, enhs in pairs(self.config.removed_enhancements) do
