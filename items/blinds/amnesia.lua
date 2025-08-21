@@ -4,7 +4,7 @@ local blindInfo = {
     atlas = 'losted_blinds',
     mult = 2,
     dollars = 5,
-    boss = { min = 6 },
+    boss = { min = 5 },
     boss_colour = HEX('f0a426'),
     loc_vars = function(self)
         return { vars = { localize(G.GAME.current_round.most_played_poker_hand, 'poker_hands')}}
@@ -13,6 +13,7 @@ local blindInfo = {
         return { vars = { localize('ph_most_played')}}
     end,
     set_blind = function(self)
+    if G.GAME and G.GAME.blind and G.GAME.blind.disabled then return end
         local most_played_hand = G.GAME.current_round.most_played_poker_hand
         if most_played_hand and G.GAME.hands[most_played_hand] then
             local raw_level = G.GAME.hands[most_played_hand].level
@@ -50,8 +51,11 @@ local blindInfo = {
     defeat = function(self)
         self:restore_hand_level()
     end,
+    disable = function(self)
+        self:restore_hand_level()
+    end,
     calculate = function(self, blind, context)
-        if context.end_of_round then
+        if (context.end_of_round or (G.GAME and G.GAME.blind and G.GAME.blind.disabled)) then
             self:restore_hand_level()
         end
     end,

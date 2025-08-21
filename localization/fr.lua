@@ -6,7 +6,6 @@ return {
                 text = {
                     'Pour chaque {C:attention}mise initiale paire{} supérieure à 3,',
                     'gagnez {C:attention}+1{} à la taille de la main',
-                    'Commencez avec {C:attention}-1{} à la taille de la main.',
                 },
                 unlock={
                     'Augmentez la taille de la main',
@@ -74,6 +73,7 @@ return {
                 text = {
                     'Supprime les {C:attention}Améliorations{}',
                     'de toutes les {C:attention}cartes marquant des points{}',
+                    '{C:inactive}(Rétablies après la défaite)'
                 }
             },
             bl_losted_inversion = {

@@ -6,7 +6,6 @@ return {
                 text = {
                     'For each {C:attention}even ante{} greater than 3,',
                     'gain {C:attention}+1{} hand size',
-                    'Start with {C:attention}-1{} hand size.',
                 },
                 unlock={
                     'Increase hand size',
@@ -74,6 +73,7 @@ return {
                 text = {
                     'Removes {C:attention}Enhancements{}',
                     'from all {C:attention}scored cards{}',
+                    '{C:inactive}(Restored when defeated)'
                 }
             },
             bl_losted_inversion = {

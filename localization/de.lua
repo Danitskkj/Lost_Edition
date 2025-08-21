@@ -6,7 +6,6 @@ return {
                 text = {
                     'Für jede {C:attention}gerade Ante{} größer als 3,',
                     'erhalte {C:attention}+1{} Handgröße',
-                    'Beginne mit {C:attention}-1{} Handgröße.',
                 },
                 unlock={
                     'Erhöhe die Handgröße',
@@ -74,6 +73,7 @@ return {
                 text = {
                     'Entfernt {C:attention}Verstärkungen{}',
                     'von allen {C:attention}gewerteten Karten{}',
+                    '{C:inactive}(Wird nach Sieg wiederhergestellt)'
                 }
             },
             bl_losted_inversion = {

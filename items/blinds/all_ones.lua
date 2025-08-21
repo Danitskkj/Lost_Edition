@@ -4,7 +4,7 @@ local blindInfo = {
     atlas = 'losted_blinds',
     mult = 2,
     dollars = 5,
-    boss = { min = 6 },
+    boss = { min = 5 },
     boss_colour = HEX('50bf7c'),
     config = {
         original_probabilities = nil

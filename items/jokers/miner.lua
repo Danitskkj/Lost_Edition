@@ -6,7 +6,7 @@ local jokerInfo = {
     cost = 6,
     unlocked = true,
     blueprint_compat = true,
-    config = { extra = { odds = 12 } },
+    config = { extra = { odds = 10 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.c_losted_greed
         return { vars = { (G.GAME.probabilities.normal or 1), card.ability.extra.odds } }

@@ -5,8 +5,7 @@ return {
                 name = 'Baralho Evolutivo',
                 text = {
                     'A cada {C:attention}aposta par{} maior que 3,',
-                    'ganhe {C:attention}+1{} de tamanho de mão',
-                    'Comece com {C:attention}-1{} de tamanho de mão.',
+                    'ganha {C:attention}+1{} de tamanho de mão',
                 },
                 unlock={
                     'Aumente o tamanho da mão',
@@ -74,7 +73,8 @@ return {
                 name = 'Vampírico',
                 text = {
                     'Remove {C:attention}Aprimoramentos{}',
-                    'de todas as {C:attention}cartas pontuadas{}',
+                    'das {C:attention}cartas pontuadas{}',
+                    '{C:inactive}(Devolve ao ser derrotado)'
                 }
             },
             bl_losted_inversion = {
@@ -421,8 +421,8 @@ return {
             j_losted_toc_toc = {
                 name = 'Toc Toc',
                 text = {
-                    'Ao jogar uma mão ganhe',
-                    '{C:money}${} igual ao número de',
+                    'Ao jogar uma mão dá {C:money}${}',
+                    'igual a quantidade de',
                     '{C:attention}descartes restantes{}',
                 }
             },

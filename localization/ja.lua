@@ -6,7 +6,6 @@ return {
                 text = {
                     '3より大きい偶数の{C:attention}アンティ{}ごとに、',
                     'ハンドサイズが{C:attention}+1{}される',
-                    'ハンドサイズ{C:attention}-1{}でスタートする。',
                 },
                 unlock={
                     'ハンドサイズを',
@@ -73,8 +72,8 @@ return {
                 name = 'ヴァンパイアリック',
                 text = {
                     'スコアされたすべてのカードから',
-                    '{C:attention}強化{}を',
-                    '取り除く',
+                    '{C:attention}強化{}を取り除く',
+                    '{C:inactive}(撃破時に復元)'
                 }
             },
             bl_losted_inversion = {

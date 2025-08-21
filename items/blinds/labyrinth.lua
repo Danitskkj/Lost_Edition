@@ -14,7 +14,7 @@ local blindInfo = {
     mult = 2,
     pos = { x = 0, y = 5 },
     atlas = "losted_blinds",
-    boss = { min = 3 },
+    boss = { min = 2 },
     boss_colour = HEX('f37013'),
     debuffed_hand = nil,
     set_blind = function(self)

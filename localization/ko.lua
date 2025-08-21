@@ -6,7 +6,6 @@ return {
                 text = {
                     '3보다 큰 모든 {C:attention}짝수 앤티{}마다,',
                     '핸드 크기 {C:attention}+1{} 획득',
-                    '핸드 크기 {C:attention}-1{}로 시작합니다.',
                 },
                 unlock={
                     '핸드 크기를',
@@ -74,6 +73,7 @@ return {
                 text = {
                     '모든 {C:attention}점수 카드{}에서',
                     '{C:attention}강화{}를 제거합니다',
+                    '{C:inactive}(처치 시 복원)'
                 }
             },
             bl_losted_inversion = {

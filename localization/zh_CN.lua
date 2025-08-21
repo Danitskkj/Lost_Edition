@@ -6,7 +6,6 @@ return {
                 text = {
                     '底注大于3的每个{C:attention}偶数底注{}后，',
                     '手牌上限{C:attention}+1{}',
-                    '开局时手牌上限{C:attention}-1{}。',
                 },
                 unlock={
                     '将手牌上限提升至',
@@ -74,6 +73,7 @@ return {
                 text = {
                     '移除所有{C:attention}计分牌{}的',
                     '{C:attention}增强效果{}',
+                    '{C:inactive}(击败后恢复)'
                 }
             },
             bl_losted_inversion = {
